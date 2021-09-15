@@ -10,9 +10,9 @@ describe('Test suite to automate a functional test for starring a message', func
 	
 	// Login
   const login = async () => {
-		const slack_url = "https://app.slack.com/client/T0153FBFTE1/C015HFDU9B3";
-		const company_name = 'testcompany-lt26378';
-		const username = 'asachaniuk@gmail.com';
+		const slack_url = "https://app.slack.com/client/T02ER5N2WLU/C02ER5P68R2";
+		const company_name = 'AmazingBlitz';
+		const username = 'vijay.unix123@gmail.com';
 		const passowrd = 'Tester01'
 		
 		await driver.get(slack_url);
