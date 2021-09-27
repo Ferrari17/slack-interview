@@ -1,27 +1,65 @@
-# slack-ui-automation
-Automate a functional test for starring a message using Selenium-WebDriver
+# Lumos
 
-## Prerequisites
-- [Node.js ](https://nodejs.org/en/) - v12.16.2
-- [npm](https://www.npmjs.com/) - v6.14.4
-	- Recommend installing with [nvm](https://github.com/nvm-sh/nvm)
-- [npx](https://www.npmjs.com/package/npx) - is a CLI tool whose purpose is to make it easy to install and manage dependencies hosted in the npm registry.
+This is a very rudimentary configuration management tool. This tool can be used
+to configure servers for the production service of a simple PHP application. This tool is modeled after industry tools such as Puppet, Chef, Fabric and Ansible.
 
-## Tools Used
-- [Selenium-WebDriver](https://www.npmjs.com/package/selenium-webdriver) - Selenium is a browser automation library. Most often used for testing web-applications, Selenium may be used for any task that requires automating interaction with the browser.
-- [Mocha](https://www.npmjs.com/package/mocha) - Mocha is a feature-rich JavaScript test framework running on Node.js and in the browser, making asynchronous testing simple and fun.
-- [Mochawesome](https://www.npmjs.com/package/mochawesome) - Mochawesome is a custom reporter for use with the Javascript testing framework, Mocha.
+I really enjoyed this challenge as it led to me gaining a deeper understanding of automating server configuration. I considered many options on how to structure this tool and my first iteration consisted simply of a list of install commands. Upon further reading, I decided to implement arrays in Bash 4. I chose this approach as it more closely resembles the hash structure Puppet uses when handling resources.
 
-## Quickstart
-Clone this repo and install all the required packages
-     
-     npm install
+For the second part of the challenge I am tasked with troubleshooting a severely misconfigured server. In the process I document the server issue, the steps taken, and the solution. See my notes in [Troubleshooting.md](https://github.com/Rick-Houser/Server_Config/blob/master/Troubleshooting.md).
 
-## Testing
-To execute tests, run following command in the console:
-    
-    npm test
+## Abstractions:
 
-To see beautiful HTML reports using Mochawesome, run this command:
+1. Automates setup of LAMP stack
+1. Install specific Debian packages
+1. Remove specific Debian packages
+1. Specify content and metadata for files and directories
+1. Will check for services that need to be restarted
 
-    npm run mochawesome
+## Structure:
+``` bash
+  Server_Config/
+  +-- bootstrap.sh
+  +-- lumos_config.sh
+  +-- metadata.txt
+  +-- debian_packages
+      +-- install.txt
+      +-- uninstall.txt
+```
+
+## How to Configure:
+
+* To install a package, add the package name to the text file labeled "install.txt" inside the "debian_packages" directory. Each package name should be on it's own line without any trailing whitespace.
+* For removing an installed package, follow you will do the same as you did to install a package. This time you will add the package names to the "uninstall.txt" file inside the "debian_packages" directory.
+* To set metadata and file content, you will need to add key value pairs into the "metadata.txt" file. Key value pairs must be separated by "=" and each on it's own line. Again, trailing whitespace should be avoided. Inside the metadata file, you will find examples from which you can edit.
+
+## **_Usage_**
+
+* Transfer directory to the destination server using the following syntax:
+
+  ```bash
+  scp -r Server_Config/ your_username@remotehost
+  ```
+
+* CD into the directory
+
+  ```bash
+  cd Server_Config/
+  ```
+
+* Make the scripts executable
+
+  ```bash
+  chmod +x lumos_config.sh bootstrap.sh
+  ```
+
+* Install dependency
+
+  ```bash
+  ./bootstrap.sh
+  ```
+
+* Run the script
+
+  ```bash
+  ./lumos_config.sh
+  ```
